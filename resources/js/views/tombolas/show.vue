@@ -197,7 +197,7 @@
         },
         mounted() {
             this.$on('new_tirage_added', (tirage) => {
-                console.log(tirage)
+                console.log('new_tirage_added', tirage)
                 window.noty({
                     message: 'Tirage effectué avec succès',
                     type: 'success'

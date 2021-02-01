@@ -76,8 +76,6 @@
         },
         mounted() {
             this.$parent.$on('add_new_tirage', ({ tombola, urnes }) => {
-                console.log('add_new_tirage', tombola)
-                console.log('add_new_tirage', urnes)
                 this.tombola = tombola
                 this.editing = false
                 this.tirage = new Tirage({}, tombola, urnes)
