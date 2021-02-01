@@ -14,6 +14,18 @@ class SettingSeeder extends Seeder
      */
     public function run()
     {
+        /**
+         *
+        [ 'name' => "ldap", 'description' => "settings LDAP." ], // 1
+        [
+        'group_id' => 1, 'name' => "liste_sigles", 'value' => "gt,rh,si,it,sav,in,bss,msan,rva,erp,dr", 'type' => "array", 'description' => "liste des sigles (à prendre en compte dans l importation LDAP)."
+        ],
+        [ 'name' => "roles", 'description' => "settings Roles." ], // 3
+        [
+        'group_id' => 3, 'name' => "default", 'value' => "1", 'type' => "integer", 'description' => "Role par défaut à la creéation d un utilisateur dont le role n est pas explicitement déterminé."
+        ],
+         *
+         */
         // groupe app_name, id: 1
         $this->createNew("app_name", null, "Moov-Africa Tombolas", "string", ",", "Application Name.");
         // groupe files, id: 2
