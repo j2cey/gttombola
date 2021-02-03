@@ -281,7 +281,7 @@ trait LdapImportTrait
                 } else {
                     $usermail = $ldapaccount->userprincipalname;
                 }
-                $role_id = config('Settings.roles.default');;
+                $role_id = config('Settings.roles.default');
                 $user_values = [
                     'name' => $ldapaccount->name,
                     'username' => $ldapaccount->samaccountname,

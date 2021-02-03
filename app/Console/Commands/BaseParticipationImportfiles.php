@@ -38,17 +38,28 @@ class BaseParticipationImportfiles extends Command
      */
     public function handle()
     {
-        $file_to_import = BaseParticipationSubfile::where('imported', 0)->where('import_processing', 0)->whereNull('suspended_at')->with('baseparticipation')->first();
+        $nb_files_treated = 0;
+        for ($i = 0; $i < config('Settings.tombola.base_participations.files.import.cron.nombre_traitements_par_minute'); $i++) {
+            $file_to_import = BaseParticipationSubfile::where('imported', 0)->where('import_processing', 0)->whereNull('suspended_at')->with('baseparticipation')->first();
 
-        \Log::info("baseparticipation:importfiles en cours de traitement...");
+            \Log::info("baseparticipation:importfiles en cours de traitement...");
 
-        if ($file_to_import) {
-            $file_to_import->importToUrne();
-            //event(new SmsresultEvent($file_to_import->planning->campaign->smsresult));
-            $this->info('baseparticipation:importfiles execute avec succes! 1 fichier traité.');
+            if ($file_to_import) {
+                $file_to_import->importToUrne();
+                //event(new SmsresultEvent($file_to_import->planning->campaign->smsresult));
+                //$this->info('baseparticipation:importfiles execute avec succes! 1 fichier traité.');
+                $nb_files_treated++;
+            } else {
+                //$this->info('Aucun fichier a traiter.');
+            }
+        }
+
+        if ($nb_files_treated > 0) {
+            $this->info('baseparticipation:importfiles execute avec succes! ' . $nb_files_treated . ' fichier(s) traité(s).');
         } else {
             $this->info('Aucun fichier a traiter.');
         }
+
         \Log::info("sbaseparticipation:importfiles Traitement termine.");
         return 0;
     }

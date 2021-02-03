@@ -53,8 +53,9 @@ class BaseParticipationController extends Controller
         //verifyAndStoreFile( Request $request, $fieldname_rqst, $fieldname_db, $directory = 'unknown', $oldimage = ' ' )
         $new_baseparticipation->verifyAndStoreFile($request, 'fichier', 'fichier', 'tombolas_participations_dir');
 
+        $nombre_max_lignes_split = config('Settings.tombola.base_participations.files.split.nombre_max_lignes');
         //splitFileIntoSubfiles($from_dir, $from_file, $to_dir, $subfile_max_line,$entete_premiere_ligne = false)
-        $subfiles = $new_baseparticipation->splitFileIntoSubfiles('tombolas_participations_dir', $new_baseparticipation->fichier, 'tombolas_participations_subfiles_dir', 500, $new_baseparticipation->entete_premiere_ligne);
+        $subfiles = $new_baseparticipation->splitFileIntoSubfiles('tombolas_participations_dir', $new_baseparticipation->fichier, 'tombolas_participations_subfiles_dir', $nombre_max_lignes_split, $new_baseparticipation->entete_premiere_ligne);
         foreach ($subfiles as $subfile) {
             $new_baseparticipation->subfiles()->save(
                 new BaseParticipationSubfile(
